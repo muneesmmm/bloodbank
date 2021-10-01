@@ -1,40 +1,75 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render 
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
+from .models import donors
+from django.contrib import messages
+from django.contrib.auth.models import User, auth
 
 
 # Create your views here.
-def home(request):
-    return render(request,"Login.html")
-data={}    
-def insert(request):
-    name=request.POST['name']
-    phone=request.POST['phone']
-    group=request.POST['group']
-    Age=request.POST['Age']
-    data[name]=[phone,group,Age]
-    print(data)
-    return render(request,"datails.html",{'values':data}) 
-users={}
-def Signup(request):
-    return render(request,"Register.html")
-def register(request):
-    name=request.POST['name']
-    email=request.POST['email']
-    password=request.POST['password']
-    users[email]=[name,password]
-    print(users)
-    return render(request,"Login.html")    
-def login(request):
-    email=request.POST['email']
-    password=request.POST['password']
-    print(email,users.items())
+def Home(request):
+    return render(request, "login.html")
 
-    for key,value in users.items():
-        if key == email and value[1] == password:
-            return render(request,"Reg.html") 
+
+def Login(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect("/display")
         else:
-            return render(request,"Login.html",{"invalid":"invlalid username & password"})    
-    
-    
-            
+            messages.info(request, "invalid")
+            return redirect("/login")
+    else:
+        return render(request, "login.html")
+
+
+def Signup(request):
+    if request.method == "POST":
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if (password1 == password2):
+            if User.objects.filter(username=username):
+                messages.info(request, "username already in use")
+                return redirect('/signup')
+            elif User.objects.filter(email=email):
+                messages.info(request, "Email already in use")
+                return redirect('/signup')
+            else:
+                users = User.objects.create_user(
+                    first_name=first_name, last_name=last_name, username=username, email=email, password=password1)
+                users.save()
+        else:
+            messages.info(request, "Password not matching")
+        return redirect('/signup')
+    else:
+        return render(request, "signup.html")
+
+
+def Logout(request):
+    auth.logout(request)
+    return redirect("/")
+
+
+def Display(request):
+    data = donors.objects.all()
+    return render(request, "display.html", {'data': data})
+
+
+def AddDonor(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        phone = request.POST['phone']
+        group = request.POST['group']
+        Age = request.POST['Age']
+        donor = donors(name=name, phone=phone, blood=group, age=Age)
+        donor.save()
+        return redirect('/display')
+    else:
+        return render(request, "add-donor.html")

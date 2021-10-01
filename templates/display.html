@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% block content %}
   <div class="container">
    
-      <div class="row">
-        <table class="table">
+
+        <table class="table" id="myTable">
             <thead class="thead-dark">
               <tr >
                 
@@ -12,21 +12,29 @@
                 <th scope="col">Blood Group</th>
               </tr>
             </thead>
-            {% for key,value in values.items %}
+            {% for value in data %}
           
             <tbody>
               <tr class="bg-light">
                 
-                <td>{{key}}</td>
-                <td>{{value.0}}</td>
-                <td>{{value.1}}</td>
-                <td>{{value.2}}</td>
+                <td>{{value.name}}</td>
+                <td>{{value.phone}}</td>
+                <td>{{value.age}}</td>
+                <td>{{value.blood}}</td>
               </tr>
              
             </tbody>
             {% endfor %}
           </table>
-      </div>
+          <div class=" d-flec justify-contentcenter" style="float: right;">
+            <a href="/add-donor" class="btn btn-primary">Add Donor</a>
+          </div>
+          
+
   </div>
+
+ 
   
 {% endblock %}
+
+
