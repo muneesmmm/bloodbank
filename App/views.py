@@ -1,6 +1,6 @@
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.http import JsonResponse
 from .models import donors
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
@@ -8,22 +8,24 @@ from django.contrib.auth.models import User, auth
 
 # Create your views here.
 def Home(request):
-    return render(request, "login.html")
-
-
-def Login(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect("/display")
+            
+            return JsonResponse({'success': True},safe=False)
         else:
-            messages.info(request, "invalid")
-            return redirect("/login")
+            
+            return JsonResponse({'success': False},safe=False)
     else:
         return render(request, "login.html")
+
+
+# def Login(request):
+#     i
+#         return render(request, "login.html")
 
 
 def Signup(request):

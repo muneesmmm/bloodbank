@@ -15,7 +15,7 @@
   </head>
   <!-- Image and text -->
 
-  <nav class="navbar navbar-dark bg-white justify-content-between">
+  <nav class="navbar navbar-light bg-white justify-content-between">
     <a class="navbar-brand">
       <img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSACmixZpMYZK3EU25VVMN7omYKj9JBkSLNWw&usqp=CAU"
@@ -23,6 +23,10 @@
         alt=""
       />Bloodbank</a
     >
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <form class="form-inline">
       {% if user.is_authenticated %}
       <a class="btn btn-outline-danger my-2 my-sm-0">{{user.username}}</a>
@@ -32,10 +36,16 @@
       <a class="btn btn-outline-danger my-2 my-sm-0" href="/signup">SignUp</a>
       {% endif %}
     </form>
+  </div>
   </nav>
   <body class="">
     {% block content %} {% endblock %}
   </body>
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
   <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -51,14 +61,20 @@
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"
   ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.js"></script>
   <script>
     $(document).ready(function () {
       $("#myTable").DataTable();
     });
   </script>
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"></script>
   <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+  
 
 </html>
