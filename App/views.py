@@ -8,6 +8,7 @@ from django.contrib.auth.models import User, auth
 
 # Create your views here.
 def Home(request):
+    user=request.session.get('username')
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -22,9 +23,11 @@ def Home(request):
         else:
             
             return JsonResponse({'success': False},safe=False)
+    elif(user):
+        return redirect('/display')
     else:
-        user=request.session.get('username')
         return render(request, "login.html",{'user':user})
+
 
 
 # def Login(request):
@@ -69,12 +72,16 @@ def Logout(request):
 
 
 def Display(request):
-    data = donors.objects.all()
-    user=request.session.get('username')  
-    return render(request, "display.html", {'data': data,'user': user})
+    user=request.session.get('username') 
+    if(user):
+        data = donors.objects.all() 
+        return render(request, "display.html", {'data': data,'user': user})
+    else:
+        return redirect("/")    
 
 
 def AddDonor(request):
+    user=request.session.get('username') 
     if request.method == "POST":
         name = request.POST['name']
         phone = request.POST['phone']
@@ -83,6 +90,8 @@ def AddDonor(request):
         donor = donors(name=name, phone=phone, blood=group, age=Age)
         donor.save()
         return redirect('/display')
-    else:
+    elif(user):
         user=request.session.get('username')
         return render(request, "add-donor.html",{'user':user})
+    else:
+        return redirect("/")     

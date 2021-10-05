@@ -1,40 +1,31 @@
 {% extends 'base.html' %} {% block content %}
-  <div class="container" style="overflow:scroll">
-   
+<div class="container">
+  <div style="overflow: scroll">
+    <table class="table" id="myTable">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Age</th>
+          <th scope="col">Blood Group</th>
+        </tr>
+      </thead>
+      {% for value in data %}
 
-        <table class="table" id="myTable">
-            <thead class="thead-dark">
-              <tr >
-                
-                <th scope="col">Name</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Age</th>
-                <th scope="col">Blood Group</th>
-              </tr>
-            </thead>
-            {% for value in data %}
-          
-            <tbody>
-              <tr class="bg-light">
-                
-                <td>{{value.name}}</td>
-                <td>{{value.phone}}</td>
-                <td>{{value.age}}</td>
-                <td>{{value.blood}}</td>
-              </tr>
-             
-            </tbody>
-            {% endfor %}
-          </table>
-          <div class=" d-flec justify-contentcenter" style="float: right;">
-            <a href="/add-donor" class="btn btn-primary">Add Donor</a>
-          </div>
-          
-
+      <tbody>
+        <tr class="bg-light">
+          <td>{{value.name}}</td>
+          <td>{{value.phone}}</td>
+          <td>{{value.age}}</td>
+          <td>{{value.blood}}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
   </div>
+  <div class="" style="float: right">
+    <a href="/add-donor" class="btn btn-primary">Add Donor</a>
+  </div>
+</div>
 
- 
-  
 {% endblock %}
-
-
