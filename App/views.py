@@ -13,14 +13,18 @@ def Home(request):
         password = request.POST['password']
         user = auth.authenticate(username=username, password=password)
         if user is not None:
-            auth.login(request, user)
+            # auth.login(request, user)
+            request.session['id'] = user.id
+            request.session['username'] = user.username
+
             
             return JsonResponse({'success': True},safe=False)
         else:
             
             return JsonResponse({'success': False},safe=False)
     else:
-        return render(request, "login.html")
+        user=request.session.get('username')
+        return render(request, "login.html",{'user':user})
 
 
 # def Login(request):
@@ -55,13 +59,19 @@ def Signup(request):
 
 
 def Logout(request):
-    auth.logout(request)
+    try:
+        del request.session['username']
+        del request.session['id']
+    except:
+        pass    
     return redirect("/")
+
 
 
 def Display(request):
     data = donors.objects.all()
-    return render(request, "display.html", {'data': data})
+    user=request.session.get('username')  
+    return render(request, "display.html", {'data': data,'user': user})
 
 
 def AddDonor(request):
@@ -74,4 +84,5 @@ def AddDonor(request):
         donor.save()
         return redirect('/display')
     else:
-        return render(request, "add-donor.html")
+        user=request.session.get('username')
+        return render(request, "add-donor.html",{'user':user})
