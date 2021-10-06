@@ -54,6 +54,7 @@ def Signup(request):
                 users = User.objects.create_user(
                     first_name=first_name, last_name=last_name, username=username, email=email, password=password1)
                 users.save()
+                return redirect('/')
         else:
             messages.info(request, "Password not matching")
         return redirect('/signup')
