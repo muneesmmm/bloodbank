@@ -36,6 +36,7 @@ def Home(request):
 
 
 def Signup(request):
+    user=request.session.get('username')
     if request.method == "POST":
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -57,9 +58,11 @@ def Signup(request):
                 return redirect('/')
         else:
             messages.info(request, "Password not matching")
-        return redirect('/signup')
+        return redirect('/signup') 
+    elif(user):
+        return redirect('/display')
     else:
-        return render(request, "signup.html")
+        return render(request, "signup.html",{'user':user})
 
 
 def Logout(request):
