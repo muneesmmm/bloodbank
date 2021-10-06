@@ -61,7 +61,7 @@ def Signup(request):
     elif(user):
         return redirect('/display')
     else:
-        return render(request, "signup.html")
+        return render(request, "signup.html",{'user':user})
 
 
 def Logout(request):
