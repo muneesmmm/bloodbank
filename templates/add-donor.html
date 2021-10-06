@@ -1,13 +1,14 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container" style="align-items: center; align-self: center; align-content: center;">
-  <div>
-    <h1 style="color: rgb(180, 12, 12); font-weight: 900;">Register here....!</h1>
-  </div>
+  
     <div class="row mt-5">
       <div class="col-md-6 justify-content-between d-flex">
         <img src="https://akm-img-a-in.tosshub.com/indiatoday/images/bodyeditor/202106/World_Blood_Donor_Day_2021-1200x1280.png?zPoL_99qDxFsZr7ygc1ydEinqjuDmDgK" width="100%"alt="">
     </div>
-        <div class="col-md-5 bg-light p-5" style="border-radius: 20px;">
+        <div class="col-md-5 bg-light p-3 m-3" style="border-radius: 20px; margin-bottom:20px">
+          <div>
+            <h3 style="color: rgb(180, 12, 12); font-weight: 900;">Register here....!</h3>
+          </div>
             <form method="post" action="add-donor">
                 {% csrf_token %}
                 <div class="form-group" >
