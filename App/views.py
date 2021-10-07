@@ -16,7 +16,7 @@ def Home(request):
         if user is not None:
             # auth.login(request, user)
             request.session['id'] = user.id
-            request.session.clear()
+            request.session['username']=user.username
 
             
             return JsonResponse({'success': True},safe=False)
@@ -70,6 +70,7 @@ def Logout(request):
         del request.session['username']
         del request.session['id']
         request.session.modified = True
+        request.session.clear()
     except:
         pass    
     return redirect("/")
