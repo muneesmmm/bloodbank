@@ -69,6 +69,7 @@ def Logout(request):
     try:
         del request.session['username']
         del request.session['id']
+        request.session.modified = True
     except:
         pass    
     return redirect("/")
