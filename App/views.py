@@ -67,10 +67,7 @@ def Signup(request):
 
 def Logout(request):
     try:
-        del request.session['username']
-        del request.session['id']
-        request.session.modified = True
-        request.session.clear()
+        request.session.flush()
     except:
         pass    
     return redirect("/")
